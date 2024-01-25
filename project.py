@@ -2,11 +2,15 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("FINAL DATA.csv")
 y = data["Price"].values
 x = data["Date"].values
 
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=.2)
+
+xtrain = xtrain.reshape(-1, 1)
 x = x.reshape(-1,1)
 
 model = LinearRegression().fit(x, y)

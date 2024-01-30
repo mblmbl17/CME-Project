@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("FINAL DATA.csv")
 y = data["Price"].values
-x = data["Date"].values
+x = data["Vol."].values
 
 xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=.2)
 
@@ -43,7 +43,6 @@ plt.figure(figsize=(6,4))
 
 plt.scatter(xtrain, ytrain, c="purple", label="Training Data")
 plt.scatter(xtest, ytest, c="blue", label="Testing Data")
-plt.scatter(xtest, predict, c="red", label="Predictions")
 plt.xlabel("Date")
 plt.ylabel("Price")
 plt.title("Price by Date")

@@ -15,7 +15,7 @@ print(x)
 print(y1)
 print(y2)
 
-plt.plot(x, y1)
+plt.scatter(x, y1)
 plt.xlabel("Year")
 plt.ylabel("Dollars")
 plt.show()

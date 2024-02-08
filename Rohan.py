@@ -1,10 +1,8 @@
 from Neuralnet import main
-from project import model
+from Price_V_Date import model
 
 
-
-
-# calls the regression model 
+# method calls
 model()
 
 main()

@@ -1,5 +1,4 @@
 from Neuralnet import main
-from project import model
 
 # Important variables:
 #     movie_db: list of 4-tuples (imported from movies.py)
@@ -221,8 +220,5 @@ if __name__ == "__main__":
 
     print("All tests passed!")
 
-
-# calls the regression model 
-model()
-
+# method calls
 main()

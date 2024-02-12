@@ -1,10 +1,9 @@
 import pandas as pd
 import numpy as np
-
+import joblib
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+Predictor_1 = joblib.load('Price_V_Date.py')
+Predictor_2 = joblib.load('Fertilizer_V_Price.py')
 
 
 # Load data
@@ -23,13 +22,7 @@ def prepare_data(data):
     return X_scaled, y_scaled, scaler
 
 # Build and train neural network model
-def build_model(input_shape):
-    model = Sequential()
-    model.add(Dense(64, input_shape=(input_shape,), activation='relu'))
-    model.add(Dense(64, activation='relu'))
-    model.add(Dense(1, activation='linear'))
-    model.compile(optimizer='adam', loss='mse')
-    return model
+
 
 # Train neural network
 def train_model(model, X_train, y_train, epochs=100, batch_size=32):
@@ -64,13 +57,13 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     # Build neural network model
-    model = build_model(input_shape=X_train.shape[1])
+    Brain = build_Brain(input_shape=X_train.shape[1])
     
     # Train model
-    train_model(model, X_train, y_train, epochs=100, batch_size=32)
+    train_model(Brain, X_train, y_train, epochs=100, batch_size=32)
     
     # Make predictions
-    predictions = make_predictions(model, X, scaler)
+    predictions = make_predictions(Brain, X, scaler)
     
     # Plot results
     plot_results(X, data["Price"].values, predictions)

@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("FINAL DATA.csv")
-y = data["Price"].values
-x = data["Date"].values
+data = pd.read_csv("Basic Models/FINAL DATA.csv")
+selected_rows = (0,22)
+updatedData = data[data.index.isin(selected_rows)]
+y = updatedData["Price"].values
+x = updatedData["Date"].values
 
 xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=.2)
 

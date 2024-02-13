@@ -5,8 +5,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("Basic Models/FINAL DATA.csv")
-y = data["Price2"].values
-x = data["Date2"].values
+y = data["Price"].values
+x = data["Date"].values
 
 xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=.2)
 

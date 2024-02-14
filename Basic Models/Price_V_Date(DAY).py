@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("FINAL DATA.csv")
+data = pd.read_csv("Basic Models/FINAL DATA.csv")
 y = data["Price"].values
 x = data["Date"].values
 

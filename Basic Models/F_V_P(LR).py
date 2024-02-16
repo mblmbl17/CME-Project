@@ -56,6 +56,7 @@ plt.ylabel("Fertilizer Price")
 plt.title("Dollars v Fertilizer Price")
 
 plt.plot(x, coef*x + intercept, c="r", label="Line of Best Fit")
-
+print(x)
+print(coef*x + intercept)
 plt.legend()
 plt.show()

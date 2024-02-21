@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-
+import joblib
 data = pd.read_csv("Basic Models/FINAL DATA.csv")
 selected_rows = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 updatedData = data[data.index.isin(selected_rows)]
@@ -33,6 +33,9 @@ print(f"R Squared value: {r_squared}")
 xtest = xtest.reshape(-1, 1)
 predict = model.predict(xtest)
 predict = np.around(predict, 2)
+
+def get_trained_model():
+   return model
 
 print("\nTesting Linear Model with Testing Data:")
 for index in range(len(xtest)):

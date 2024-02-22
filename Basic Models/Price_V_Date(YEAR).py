@@ -34,8 +34,7 @@ xtest = xtest.reshape(-1, 1)
 predict = model.predict(xtest)
 predict = np.around(predict, 2)
 
-def get_trained_model():
-   return model
+
 
 print("\nTesting Linear Model with Testing Data:")
 for index in range(len(xtest)):
@@ -56,3 +55,4 @@ plt.plot(x, coef*x + intercept, c="r", label="Line of Best Fit")
 
 plt.legend()
 plt.show()
+joblib.dump(model, 'Neuralnet.py')

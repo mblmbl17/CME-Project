@@ -1,7 +1,7 @@
-from movies import movie_db
+from predic import predict_db
 from match import match
 from typing import List, Tuple, Callable, Any
-def chatbot():
+def chatbot(predic: Tuple[int,float]):
     # Important variables:
     #     movie_db: list of 4-tuples (imported from movies.py)
     #     pa_list: list of pattern-action pairs (queries)
@@ -37,44 +37,24 @@ def chatbot():
 
 
     def price_by_month(matches: List[str]) -> List[str]:
-        """Finds all movies made in the passed in year
+        """Finds price in the passed in month
 
         Args:
-            matches - a list of 1 string, just the year. Note that this year is passed as a
+            matches - a list of 1 string, just the month. Note that this month is passed as a
                 string and should be converted to an int
 
         Returns:
             a list of movie titles made in the passed in year
         """
-        results=[]
+        #converting string to int month 
 
-        for movie in movie_db:
-            if int(matches[0]) == get_year(movie):
+        # done converting
+
+        for predic in predict_db:
+            if int(matches[0]) == get_month(predic):
                 
-                results.append(get_title(movie))
+                return (get_price(predic))
         
-        return results
-        
-
-
-    def month_by_price(matches: List[str]) -> List[str]:
-        """Finds all movies made in the passed in year range
-
-        Args:
-            matches - a list of 2 strings, the year beginning the range and the year ending
-                the range. For example, to get movies from 1991-1994 matches would look like
-                this - ["1991", "1994"] Note that these years are passed as strings and
-                should be converted to ints.
-
-        Returns:
-            a list of movie titles made during those years, inclusive (meaning if you pass
-            in ["1991", "1994"] you will get movies made in 1991, 1992, 1993 & 1994)
-        """
-        results=[]
-        for movie in movie_db:
-            if int(matches[0])<=get_year(movie) and get_year(movie)<= int(matches[1]):
-                results.append(get_title(movie))
-        return results
         
     # dummy argument is ignored and doesn't matter
     def bye_action(dummy: List[str]) -> None:
@@ -84,16 +64,16 @@ def chatbot():
     # The pattern-action list for the natural language query system A list of tuples of
     # pattern and action It must be declared here, after all of the function definitions
     pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-        (str.split("what movies were made in _"), title_by_year),
-        (str.split("what movies were made between _ and _"), title_by_year_range),
+        (str.split("what will be the price of corn in _"), price_by_month),
+        (str.split("what movies were made between _ and _"), ),
         (str.split("what movies were made before _"), title_before_year),
         (str.split("what movies were made after _"), title_after_year),
         # note there are two valid patterns here two different ways to ask for the director
         # of a movie
-        (str.split("who directed %"), director_by_title),
-        (str.split("who was the director of %"), director_by_title),
-        (str.split("what movies were directed by %"), title_by_director),
-        (str.split("who acted in %"), actors_by_title),
+        (str.split("what will be the price of corn in %"), price_by_month),
+        (str.split("what will the price be on %"), price_by_month),
+        (str.split("what will the corn price be on %"), price_by_month),
+        (str.split("what will the corn price be in %"), price_by_month),
         (str.split("when was % made"), year_by_title),
         (str.split("in what movies did % appear"), title_by_actor),
         (str.split("what movies has % acted in"), title_by_actor),
@@ -113,6 +93,40 @@ def chatbot():
             a list of answers. Will be ["I don't understand"] if it finds no matches and
             ["No answers"] if it finds a match but no answers
         """
+        finalmonth=0
+        month=0
+        myears=0
+        time=match(pat,src)
+        if(time[0]== "J" or time[0]== "j"):
+            if(time[1]=="u"):
+                if(time[2]== "l"):
+                    month=7
+                else:
+                    month=6
+            else:
+                month=1        
+        elif(time[0]== "M" or time[0]== "m"):
+            if(time[2]=="r"):
+                month=3
+            else:
+                month=5
+        elif(time[0]== "A" or time[0]== "a"):
+            if(time[1]=="p"):
+                month=4
+            else:
+                month=8
+        elif(time[0]== "F" or time[0]== "f"):
+            month=2
+        elif(time[0]== "S" or time[0]== "s"):
+            month=9
+        elif(time[0]== "O" or time[0]== "o"):
+            month=10
+        elif(time[0]== "N" or time[0]== "n"):
+            month=11
+        else:
+            month=12
+        myears=(int(time[-1])-4)*12
+        finalmonth=myears+month
         for pat, act in pa_list:
             mat=match(pat,src)
             # print(pat)

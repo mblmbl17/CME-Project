@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-
+import joblib
 data = pd.read_csv("Basic Models/FINAL DATA.csv")
 selected_rows = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 updatedData = data[data.index.isin(selected_rows)]
@@ -34,6 +34,8 @@ xtest = xtest.reshape(-1, 1)
 predict = model.predict(xtest)
 predict = np.around(predict, 2)
 
+
+
 print("\nTesting Linear Model with Testing Data:")
 for index in range(len(xtest)):
    actual = ytest[index]
@@ -53,3 +55,4 @@ plt.plot(x, coef*x + intercept, c="r", label="Line of Best Fit")
 
 plt.legend()
 plt.show()
+joblib.dump(model, 'Neuralnet.py')

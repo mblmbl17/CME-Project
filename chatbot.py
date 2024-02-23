@@ -93,11 +93,40 @@ def chatbot(predic: Tuple[int,float]):
             a list of answers. Will be ["I don't understand"] if it finds no matches and
             ["No answers"] if it finds a match but no answers
         """
+        finalmonth=0
+        month=0
+        myears=0
         time=match(pat,src)
-        x=0
-        while(x<time.len())
-            
-        
+        if(time[0]== "J" or time[0]== "j"):
+            if(time[1]=="u"):
+                if(time[2]== "l"):
+                    month=7
+                else:
+                    month=6
+            else:
+                month=1        
+        elif(time[0]== "M" or time[0]== "m"):
+            if(time[2]=="r"):
+                month=3
+            else:
+                month=5
+        elif(time[0]== "A" or time[0]== "a"):
+            if(time[1]=="p"):
+                month=4
+            else:
+                month=8
+        elif(time[0]== "F" or time[0]== "f"):
+            month=2
+        elif(time[0]== "S" or time[0]== "s"):
+            month=9
+        elif(time[0]== "O" or time[0]== "o"):
+            month=10
+        elif(time[0]== "N" or time[0]== "n"):
+            month=11
+        else:
+            month=12
+        myears=(int(time[-1])-4)*12
+        finalmonth=myears+month
         for pat, act in pa_list:
             mat=match(pat,src)
             # print(pat)

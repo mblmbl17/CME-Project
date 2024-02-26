@@ -13,7 +13,7 @@ def train_neural_network(X, y, future_data=None):
     model = MLPRegressor(hidden_layer_sizes=(100, 50), activation='relu', solver='adam', random_state=42)
     model.fit(X_train, y_train)
 
-    # Make predictions
+    # Make p--redictions
     y_pred = model.predict(X_test)
     
     # Evaluate the model

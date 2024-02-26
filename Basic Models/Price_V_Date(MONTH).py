@@ -5,9 +5,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import joblib
 data = pd.read_csv("Basic Models/FINAL DATA.csv")
-selected_rows = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+selected_rows = [0,1,2,3,4,5,6,7,8,9,10,11]
 updatedData = data[data.index.isin(selected_rows)]
-y = updatedData["2023"].values
+y = updatedData["2022"].values
+
 x = updatedData["Months"].values
 
 print(y)

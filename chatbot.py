@@ -46,9 +46,7 @@ def chatbot(predic: Tuple[int,float]):
         Returns:
             a list of movie titles made in the passed in year
         """
-        #converting string to int month 
-
-        # done converting
+        
 
         for predic in predict_db:
             if int(matches[0]) == get_month(predic):
@@ -64,19 +62,18 @@ def chatbot(predic: Tuple[int,float]):
     # The pattern-action list for the natural language query system A list of tuples of
     # pattern and action It must be declared here, after all of the function definitions
     pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-        (str.split("what will be the price of corn in _"), price_by_month),
-        (str.split("what movies were made between _ and _"), ),
-        (str.split("what movies were made before _"), title_before_year),
-        (str.split("what movies were made after _"), title_after_year),
         # note there are two valid patterns here two different ways to ask for the director
         # of a movie
         (str.split("what will be the price of corn in %"), price_by_month),
+        (str.split("What will be the price of corn in %"), price_by_month),
+        (str.split("What will be the price of corn on %"), price_by_month),
+        (str.split("what will be the price of corn on %"), price_by_month),
+        (str.split("What will the price be on %"), price_by_month),
         (str.split("what will the price be on %"), price_by_month),
+        (str.split("What will the corn price be on %"), price_by_month),
         (str.split("what will the corn price be on %"), price_by_month),
+        (str.split("What will the corn price be in %"), price_by_month),
         (str.split("what will the corn price be in %"), price_by_month),
-        (str.split("when was % made"), year_by_title),
-        (str.split("in what movies did % appear"), title_by_actor),
-        (str.split("what movies has % acted in"), title_by_actor),
         (["bye"], bye_action),
     ]
 
@@ -93,6 +90,7 @@ def chatbot(predic: Tuple[int,float]):
             a list of answers. Will be ["I don't understand"] if it finds no matches and
             ["No answers"] if it finds a match but no answers
         """
+        #converting string to int month 
         finalmonth=0
         month=0
         myears=0
@@ -127,6 +125,7 @@ def chatbot(predic: Tuple[int,float]):
             month=12
         myears=(int(time[-1])-4)*12
         finalmonth=myears+month
+        # done converting
         for pat, act in pa_list:
             mat=match(pat,src)
             # print(pat)
@@ -147,7 +146,7 @@ def chatbot(predic: Tuple[int,float]):
         while True:
             try:
                 print()
-                query = input("Your query? ").replace("?", "").lower().split()
+                query = input("Your corn-related query?").replace("?", "").lower().split()
                 answers = search_pa_list(query)
                 for ans in answers:
                     print(ans)

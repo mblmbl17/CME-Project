@@ -1,6 +1,6 @@
 from flask import Flask,request,jsonify
 
-from predic import predict_db
+from predictions import predict_db
 from match import match
 from typing import List, Tuple, Callable, Any
 from match import match 
@@ -45,11 +45,11 @@ def chatbot(predic: Tuple[int,float]):
 
 
     # The projection functions, that give us access to certain parts of a "movie" (a tuple)
-    def get_month(movie: Tuple[str, str, int, List[str]]) -> str:
-        return movie[0]
+    def get_month(predic: Tuple[int,float]) -> int:
+        return predic[0]
 
-    def get_price(movie: Tuple[str, str, int, List[str]]) -> int:
-        return movie[2]
+    def get_price(predic: Tuple[int,float]) -> float:
+        return predic[1]
 
     # Below are a set of actions. Each takes a list argument and returns a list of answers
     # according to the action and the argument. It is important that each function returns a
@@ -66,7 +66,8 @@ def chatbot(predic: Tuple[int,float]):
         Returns:
             a list of movie titles made in the passed in year
         """
-        #converting string to int month 
+        #converting string to int month
+        #converts "january 2024" to 1, "february 2024" to 2, etc
         finalmonth=0
         month=0
         myears=0
@@ -119,17 +120,12 @@ def chatbot(predic: Tuple[int,float]):
     pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
         (str.split("what will be the price of corn in _"), price_by_month),
         (str.split("what movies were made between _ and _"), ),
-        (str.split("what movies were made before _"), title_before_year),
-        (str.split("what movies were made after _"), title_after_year),
         # note there are two valid patterns here two different ways to ask for the director
         # of a movie
         (str.split("what will be the price of corn in %"), price_by_month),
         (str.split("what will the price be on %"), price_by_month),
         (str.split("what will the corn price be on %"), price_by_month),
         (str.split("what will the corn price be in %"), price_by_month),
-        (str.split("when was % made"), year_by_title),
-        (str.split("in what movies did % appear"), title_by_actor),
-        (str.split("what movies has % acted in"), title_by_actor),
         (["bye"], bye_action),
     ]
 

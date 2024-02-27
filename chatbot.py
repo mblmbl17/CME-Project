@@ -1,6 +1,26 @@
+from flask import Flask,request,jsonify
+
 from predic import predict_db
 from match import match
 from typing import List, Tuple, Callable, Any
+from match import match 
+app = Flask(__name__)
+
+def  read_message():
+    data = request.get_json()
+    # Extract necessary data from the request
+    prediction = (data['int_value'], data['float_value'])  # Example: Extract int and float values from JSON
+    
+    # Call your chatbot function with the prediction
+    result = chatbot(prediction)
+    
+    # Prepare response in JSON format
+    resp = jsonify(result)
+    
+    return resp
+
+if __name__ == "__main__":
+    app.run(debug=True)
 def chatbot(predic: Tuple[int,float]):
     # Important variables:
     #     movie_db: list of 4-tuples (imported from movies.py)
@@ -36,7 +56,7 @@ def chatbot(predic: Tuple[int,float]):
     # list of the answer(s) and not just the answer itself.
 
 
-    def price_by_month(matches: List[str]) -> List[str]:
+    def price_by_month(matches: List[str]) -> float:
         """Finds price in the passed in month
 
         Args:
@@ -46,55 +66,11 @@ def chatbot(predic: Tuple[int,float]):
         Returns:
             a list of movie titles made in the passed in year
         """
-        
-
-        for predic in predict_db:
-            if int(matches[0]) == get_month(predic):
-                
-                return (get_price(predic))
-        
-        
-    # dummy argument is ignored and doesn't matter
-    def bye_action(dummy: List[str]) -> None:
-        raise KeyboardInterrupt
-
-
-    # The pattern-action list for the natural language query system A list of tuples of
-    # pattern and action It must be declared here, after all of the function definitions
-    pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-        # note there are two valid patterns here two different ways to ask for the director
-        # of a movie
-        (str.split("what will be the price of corn in %"), price_by_month),
-        (str.split("What will be the price of corn in %"), price_by_month),
-        (str.split("What will be the price of corn on %"), price_by_month),
-        (str.split("what will be the price of corn on %"), price_by_month),
-        (str.split("What will the price be on %"), price_by_month),
-        (str.split("what will the price be on %"), price_by_month),
-        (str.split("What will the corn price be on %"), price_by_month),
-        (str.split("what will the corn price be on %"), price_by_month),
-        (str.split("What will the corn price be in %"), price_by_month),
-        (str.split("what will the corn price be in %"), price_by_month),
-        (["bye"], bye_action),
-    ]
-
-
-    def search_pa_list(src: List[str]) -> List[str]:
-        """Takes source, finds matching pattern and calls corresponding action. If it finds
-        a match but has no answers it returns ["No answers"]. If it finds no match it
-        returns ["I don't understand"].
-
-        Args:
-            source - a phrase represented as a list of words (strings)
-
-        Returns:
-            a list of answers. Will be ["I don't understand"] if it finds no matches and
-            ["No answers"] if it finds a match but no answers
-        """
         #converting string to int month 
         finalmonth=0
         month=0
         myears=0
-        time=match(pat,src)
+        time=matches[0]
         if(time[0]== "J" or time[0]== "j"):
             if(time[1]=="u"):
                 if(time[2]== "l"):
@@ -126,6 +102,51 @@ def chatbot(predic: Tuple[int,float]):
         myears=(int(time[-1])-4)*12
         finalmonth=myears+month
         # done converting
+
+        for predic in predict_db:
+            if finalmonth == get_month(predic):
+                
+                return (get_price(predic))
+        
+        
+    # dummy argument is ignored and doesn't matter
+    def bye_action(dummy: List[str]) -> None:
+        raise KeyboardInterrupt
+
+
+    # The pattern-action list for the natural language query system A list of tuples of
+    # pattern and action It must be declared here, after all of the function definitions
+    pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
+        (str.split("what will be the price of corn in _"), price_by_month),
+        (str.split("what movies were made between _ and _"), ),
+        (str.split("what movies were made before _"), title_before_year),
+        (str.split("what movies were made after _"), title_after_year),
+        # note there are two valid patterns here two different ways to ask for the director
+        # of a movie
+        (str.split("what will be the price of corn in %"), price_by_month),
+        (str.split("what will the price be on %"), price_by_month),
+        (str.split("what will the corn price be on %"), price_by_month),
+        (str.split("what will the corn price be in %"), price_by_month),
+        (str.split("when was % made"), year_by_title),
+        (str.split("in what movies did % appear"), title_by_actor),
+        (str.split("what movies has % acted in"), title_by_actor),
+        (["bye"], bye_action),
+    ]
+
+
+    def search_pa_list(src: List[str]) -> List[str]:
+        """Takes source, finds matching pattern and calls corresponding action. If it finds
+        a match but has no answers it returns ["No answers"]. If it finds no match it
+        returns ["I don't understand"].
+
+        Args:
+            source - a phrase represented as a list of words (strings)
+
+        Returns:
+            a list of answers. Will be ["I don't understand"] if it finds no matches and
+            ["No answers"] if it finds a match but no answers
+        """
+        
         for pat, act in pa_list:
             mat=match(pat,src)
             # print(pat)
@@ -136,7 +157,8 @@ def chatbot(predic: Tuple[int,float]):
                 print(answer)
                 return answer if answer else ["No answers"]
         return ["I don't understand"]    
-
+if __name__ == "__main__":
+    app.run(debug=True)
 
     def query_loop() -> None:
         """The simple query loop. The try/except structure is to catch Ctrl-C or Ctrl-D
@@ -146,7 +168,7 @@ def chatbot(predic: Tuple[int,float]):
         while True:
             try:
                 print()
-                query = input("Your corn-related query?").replace("?", "").lower().split()
+                query = input("Your query? ").replace("?", "").lower().split()
                 answers = search_pa_list(query)
                 for ans in answers:
                     print(ans)
@@ -163,4 +185,4 @@ def chatbot(predic: Tuple[int,float]):
     query_loop()
 
 # method calls
-main()
+

@@ -5,88 +5,13 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import joblib
 data = pd.read_csv("Basic Models/FINAL DATA.csv")
-selected_rows = [0,1,2,3,4,5,6,7,8,9,10,11]
-selected_rows_2023 = [2,3,4,5,6,7,8,9,10,11]
+selected_rows = list(range(240))
 updatedData = data[data.index.isin(selected_rows)]
-updatedData_2023 = data[data.index.isin(selected_rows_2023)]
-y1 = updatedData_2023["2023"].values
-y2 = updatedData["2022"].values
-y3 = updatedData["2021"].values
-y4 = updatedData["2020"].values
-y5 = updatedData["2019"].values
-y6 = updatedData["2018"].values
-y7 = updatedData["2017"].values
-y8 = updatedData["2016"].values
-y9 = updatedData["2015"].values
-y10 = updatedData["2014"].values
-y11 = updatedData["2013"].values
-y12 = updatedData["2012"].values
-y13 = updatedData["2011"].values
-y14 = updatedData["2010"].values
-y15 = updatedData["2009"].values
-y16 = updatedData["2008"].values
-y17 = updatedData["2007"].values
-y18 = updatedData["2006"].values
-y19 = updatedData["2005"].values
-y20 = updatedData["2004"].values
+y = updatedData["Price(Month)"].values
+x = updatedData["Month"].values
 
-x = updatedData["Months"].values
-
-final_data = {
-    'x' : x,
-    'y2' : y2,
-    'y3' : y3,
-    'y4' : y4,
-    'y5' : y5,
-    'y6' : y6,
-    'y7' : y7,
-    'y8' : y8,
-    'y9' : y9,
-    'y10' : y10,
-    'y11' : y11,
-    'y12' : y12,
-    'y13' : y13,
-    'y14' : y14,
-    'y15' : y15,
-    'y16' : y16,
-    'y17' : y17,
-    'y18' : y18,
-    'y19' : y19,
-    'y20' : y20
-}
-
-df = pd.DataFrame(final_data)
-
-print(df)
-
-plt.plot(df['x'], df['y2'], label = "2022")
-plt.plot(df['x'], df['y3'], label = "2021")
-plt.plot(df['x'], df['y4'], label = "2020")
-plt.plot(df['x'], df['y5'], label = "2019")
-plt.plot(df['x'], df['y6'], label = "2018")
-plt.plot(df['x'], df['y7'], label = "2017")
-plt.plot(df['x'], df['y8'], label = "2016")
-plt.plot(df['x'], df['y9'], label = "2015")
-plt.plot(df['x'], df['y10'], label = "2014")
-plt.plot(df['x'], df['y11'], label = "2013")
-plt.plot(df['x'], df['y12'], label = "2012")
-plt.plot(df['x'], df['y13'], label = "2011")
-plt.plot(df['x'], df['y14'], label = "2010")
-plt.plot(df['x'], df['y15'], label = "2009")
-plt.plot(df['x'], df['y16'], label = "2008")
-plt.plot(df['x'], df['y17'], label = "2007")
-plt.plot(df['x'], df['y18'], label = "2006")
-plt.plot(df['x'], df['y19'], label = "2005")
-plt.plot(df['x'], df['y20'], label = "2004")
-
-plt.show()
-
-plt.xlabel('Month')
-plt.ylabel('Price')
-plt.title("Price V Date (Month)")
-
-plt.legend()
-plt.grid(True)
+print(x)
+print(y)
 
 # xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=.2)
  

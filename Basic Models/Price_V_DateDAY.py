@@ -54,3 +54,4 @@ class PriceVDateDay:
 
     plt.legend()
     plt.show()
+    print("The predicted day:" + prediction_day(40000))

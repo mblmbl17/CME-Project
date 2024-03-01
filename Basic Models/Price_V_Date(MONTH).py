@@ -34,15 +34,6 @@ xtest = xtest.reshape(-1, 1)
 predict = model.predict(xtest)
 predict = np.around(predict, 2)
 
-
-
-print("\nTesting Linear Model with Testing Data:")
-for index in range(len(xtest)):
-   actual = ytest[index]
-   predicted_y = predict[index]
-   x_coord = xtest[index]
-   print("x value:", float(x_coord), "Predicted y value:", predicted_y, "Actual y value:", actual)
-
 plt.figure(figsize=(6,4))
 
 plt.scatter(xtrain, ytrain, c="purple", label="Training Data")

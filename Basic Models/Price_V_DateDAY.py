@@ -48,7 +48,7 @@ class PriceVDateDay:
     plt.scatter(xtest, ytest, c="blue", label="Testing Data")
     plt.xlabel("Date")
     plt.ylabel("Price")
-    plt.title("Price by Date")
+    plt.title("Price by Date (Daily)")
 
     plt.plot(x, coef*x + intercept, c="r", label="Line of Best Fit")
 

@@ -153,14 +153,13 @@ def chatbot(predic: Tuple[int,float]):
                 print(answer)
                 return answer if answer else ["No answers"]
         return ["I don't understand"]    
-if __name__ == "__main__":
-    app.run(debug=True)
+
 
     def query_loop() -> None:
         """The simple query loop. The try/except structure is to catch Ctrl-C or Ctrl-D
         characters and exit gracefully.
         """
-        print("Welcome to the movie database!\n")
+        print("Welcome to the Finance Phantoms futures aid!\n")
         while True:
             try:
                 print()
@@ -182,3 +181,5 @@ if __name__ == "__main__":
 
 # method calls
 
+    if __name__ == "__main__":
+        app.run(debug=True)

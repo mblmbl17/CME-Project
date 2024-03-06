@@ -1,6 +1,4 @@
 from flask import Flask,request,jsonify
-
-from predictions import predict_db
 from match import match
 from typing import List, Tuple, Callable, Any
 from Price_V_DateDAY import PriceVDateDay
@@ -45,11 +43,11 @@ def chatbot(predic: Tuple[int,float]):
 
 
     # The projection functions, that give us access to certain parts of a "movie" (a tuple)
-    def get_month(predic: Tuple[int,float]) -> int:
-        return predic[0]
+    #def get_month(predic: Tuple[int,float]) -> int:
+        #return predic[0]
 
-    def get_price(predic: Tuple[int,float]) -> float:
-        return predic[1]
+    #def get_price(predic: Tuple[int,float]) -> float:
+        #return predic[1]
 
     # Below are a set of actions. Each takes a list argument and returns a list of answers
     # according to the action and the argument. It is important that each function returns a
@@ -66,9 +64,10 @@ def chatbot(predic: Tuple[int,float]):
         Returns:
             a list of movie titles made in the passed in year
         """
+        
         #converting string to int month
         #converts "january 2024" to 1, "february 2024" to 2, etc
-        finalmonth=0
+        finalday=0
         month=0
         myears=0
         time=matches[0]
@@ -100,15 +99,12 @@ def chatbot(predic: Tuple[int,float]):
             month=11
         else:
             month=12
-        myears=(int(time[-1])-4)*12
-        finalmonth=myears+month
-        # done converting
-
-        for predic in predict_db:
-            if finalmonth == get_month(predic):
-                
-                return (get_price(predic))
         
+        myears=(int(time[-1])-4)*12+(int(time[-2]))*12
+        finalday=30(myears+month)+37988
+        # done converting
+        price=PriceVDateDay(finalday)
+        return price
         
     # dummy argument is ignored and doesn't matter
     def bye_action(dummy: List[str]) -> None:
@@ -118,8 +114,6 @@ def chatbot(predic: Tuple[int,float]):
     # The pattern-action list for the natural language query system A list of tuples of
     # pattern and action It must be declared here, after all of the function definitions
     pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-        (str.split("what will be the price of corn in _"), price_by_month),
-        (str.split("what movies were made between _ and _"), ),
         # note there are two valid patterns here two different ways to ask for the director
         # of a movie
         (str.split("what will be the price of corn in %"), price_by_month),

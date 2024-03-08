@@ -1,6 +1,7 @@
 from flask import Flask,request,jsonify
 from match import match
 from typing import List, Tuple, Callable, Any
+import pandas as pd
 from Price_V_DateDAY import PriceVDateDay
 app = Flask(__name__)
 
@@ -103,7 +104,11 @@ def chatbot(predic: Tuple[int,float]):
         myears=(int(time[-1])-4)*12+(int(time[-2]))*12
         finalday=30(myears+month)+37988
         # done converting
-        price=PriceVDateDay(finalday)
+        data = pd.read_csv("Basic Models/FINAL DATA.csv")
+        y = data["Price"].values
+        x = data["Date"].values
+        regression=PriceVDateDay(x,y)
+        price=regression.prediction_day(float(finalday))
         return price
         
     # dummy argument is ignored and doesn't matter

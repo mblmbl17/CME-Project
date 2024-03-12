@@ -15,7 +15,17 @@ class PriceVDateDay:
 
         self.model = LinearRegression().fit(xtrain, ytrain)
 
-        # Find the coefficient, bias, and r squared values. 
+        
+
+        xtest = xtest.reshape(-1, 1)
+        predict1 = self.model.predict(xtest)
+        predict1 = np.around(predict1, 2)
+
+        
+    def prediction_day(self,day)->float:
+        prediction = self.model.predict(day)
+        return prediction
+    # Find the coefficient, bias, and r squared values. 
         # Each should be a float and rounded to two decimal places. 
         #coef = round(float(model.coef_), 2)
         #intercept = round(float(model.intercept_), 2)
@@ -28,21 +38,12 @@ class PriceVDateDay:
         # Predict the the blood pressure of someone who is 43 years old.
         # Print out the prediction
         # Create the model in matplotlib and include the line of best fit
-
-        xtest = xtest.reshape(-1, 1)
-        predict1 = self.model.predict(xtest)
-        predict1 = np.around(predict1, 2)
-
         # print("\nTesting Linear Model with Testing Data:")
         # for index in range(len(xtest)):
         #     actual = ytest[index]
         #     predicted_y = predict[index]
         #     x_coord = xtest[index]
         #     print("x value:", float(x_coord), "Predicted y value:", predicted_y, "Actual y value:", actual)
-    def prediction_day(self,day)->float:
-        prediction = self.model.predict(day)
-        return prediction
-
         # plt.figure(figsize=(6,4))
 
         # plt.scatter(xtrain, ytrain, c="purple", label="Training Data")

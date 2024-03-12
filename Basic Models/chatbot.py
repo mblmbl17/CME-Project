@@ -100,15 +100,21 @@ def chatbot(predic: Tuple[int,float]):
             month=11
         else:
             month=12
-        
-        myears=(int(time[-1])-4)*12+(int(time[-2]))*12
-        finalday=30(myears+month)+37988
+        year=0
+        i=0
+        while(i<10):
+            if(time[-1]==i):
+                year=i-4
+            if(time[-2]==i):
+                year+=(10*i)
+            i+=1
+        finalday=30((year*12)+month)+37988
         # done converting
         data = pd.read_csv("Basic Models/FINAL DATA.csv")
         y = data["Price"].values
         x = data["Date"].values
         regression=PriceVDateDay(x,y)
-        price=regression.prediction_day(float(finalday))
+        price=regression.prediction_day(finalday)
         return price
         
     # dummy argument is ignored and doesn't matter

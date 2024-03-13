@@ -21,40 +21,6 @@ def  read_message():
 if __name__ == "__main__":
     app.run(debug=True)
 def chatbot(predic: Tuple[int,float]):
-    # Important variables:
-    #     movie_db: list of 4-tuples (imported from movies.py)
-    #     pa_list: list of pattern-action pairs (queries)
-    #       pattern - strings with % and _ (not consecutive)
-    #       action  - return list of strings
-
-    # THINGS TO ASK THE MOVIE CHAT BOT: 
-    # what movies were made in _ (must be date, because we don't have location)
-    # what movies were made between _ and _
-    # what movies were made before _
-    # what movies were made after _
-    # who directed %
-    # who was the director of %
-    # what movies were directed by %
-    # who acted in %
-    # when was % made
-    # in what movies did % appear
-    # bye
-
-    #  Include the movie database, named movie_db
-
-
-    # The projection functions, that give us access to certain parts of a "movie" (a tuple)
-    #def get_month(predic: Tuple[int,float]) -> int:
-        #return predic[0]
-
-    #def get_price(predic: Tuple[int,float]) -> float:
-        #return predic[1]
-
-    # Below are a set of actions. Each takes a list argument and returns a list of answers
-    # according to the action and the argument. It is important that each function returns a
-    # list of the answer(s) and not just the answer itself.
-
-
     def price_by_month(matches: List[str]) -> float:
         """Finds price in the passed in month
 
@@ -70,7 +36,6 @@ def chatbot(predic: Tuple[int,float]):
         #converts "january 2024" to 1, "february 2024" to 2, etc
         finalday=0
         month=0
-        myears=0
         time=matches[0]
         if(time[0]== "J" or time[0]== "j"):
             if(time[1]=="u"):
@@ -103,12 +68,12 @@ def chatbot(predic: Tuple[int,float]):
         year=0
         i=0
         while(i<10):
-            if(time[-1]==i):
+            if(time[-1]==str(i)):
                 year=i-4
-            if(time[-2]==i):
+            if(time[-2]==str(i)):
                 year+=(10*i)
             i+=1
-        finalday=30((year*12)+month)+37988
+        finalday=30*(12*year+month)+37988
         # done converting
         data = pd.read_csv("Basic Models/FINAL DATA.csv")
         y = data["Price"].values
@@ -168,7 +133,7 @@ def chatbot(predic: Tuple[int,float]):
         while True:
             try:
                 print()
-                query = input("Your query? ").replace("?", "").lower().split()
+                query = input("Your corn-related query? ").replace("?", "").lower().split()
                 answers = search_pa_list(query)
                 for ans in answers:
                     print(ans)

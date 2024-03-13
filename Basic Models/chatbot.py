@@ -115,13 +115,9 @@ def chatbot(predic: Tuple[int,float]):
         
         for pat, act in pa_list:
             mat=match(pat,src)
-            # print(pat)
-            # print(src)
-            # print(act)
             if mat is not None:
                 answer=act(mat)
-                print(answer)
-                return answer if answer else ["No answers"]
+                return answer if answer else ["Sorry, but there is no accurate predicted price for that month"]
         return ["I don't understand"]    
 
 
